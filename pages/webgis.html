@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+
+<head>
+    <base href="">
+    <title>My WebGIS - Map</title>
+
+    <!--StyleSheets-->
+    <link rel="stylesheet" href="../assets/libraries/ol-v6.14.1-dist/ol.css">
+    <link rel="stylesheet" href="../assets/libraries/bootstrap-5.0.2-dist/css/bootstrap.css">
+
+    <!-- Layer Switcher CSS -->
+    <link rel="stylesheet" href="https://rawgit.com/walkermatt/ol-layerswitcher/master/src/ol-layerswitcher.css">
+
+    <link rel="stylesheet" href="../assets/css/custom-styles.css">
+</head>
+
+<body>
+    <div class="w-100 vh-100">
+        <div class="floating-button">
+            <a href="../index.html" class="btn btn-primary">Go Home</a>
+        </div>
+        <div id="map"></div>
+
+        <!--The structure for the popup-->
+        <div id="popup" class="ol-popup">
+            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+            <div id="popup-content">
+
+                
+            </div>
+        </div>
+    </div>
+
+
+    <!--Scripts-->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/libraries/ol-v6.14.1-dist/ol.js"></script>
+
+    <!-- Layer Switcher JS -->
+    <script src="https://rawgit.com/walkermatt/ol-layerswitcher/master/dist/ol-layerswitcher.js"></script>
+
+    <script src="../assets/js/map.js"></script>
+</body>
+
+</html>
