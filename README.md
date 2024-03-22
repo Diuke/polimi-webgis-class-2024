@@ -1,4 +1,4 @@
-# GIS 2024 - Politecnico di Milano
+# GIS 2023 - Politecnico di Milano
 Repository for the Web Development part of the GIS lessons 2023 - 2024.
 
 The contents of this repository are entirely for learning purposes. All contents and code is completely open and available and based on open-source software.
@@ -8,12 +8,28 @@ Students are encouraged to fork and and modify this template as much as they wan
 ## Installing
 Clone the repository using the command 
 ```sh
-git clone https://github.com/Diuke/polimi-webgis-class-2024
+git clone https://github.com/Diuke/polimi-webgis-class-2023
 ```
 
 Or fork the repository for having your own copy.
 
-Now serve the website using any web server available. This is a static website, so dragging and dropping the website in (for example) an Apache web server should be enough. 
+This application uses npm as the package manager and Vite as the web server.
+It uses Node version 16 or higher.
+
+First, install the dependencies using the command:
+```sh
+npm install
+```
+
+Run the project using the command.
+```sh
+npm run start
+```
+
+This will start a Vite server. Open the application in http://localhost:5173/
+
+Using Vite it is possible to follow the examples of OpenLayers, as well as use more advanced TypeScript and Visual Studio Code capabilities, such 
+as intellisense, fast reload, documentation, and code completion.
 
 ## Credits
 The website is based on the template:

@@ -15,9 +15,20 @@
     background-color: #2e7947;
 }
 
+.banner-transparency {
+    opacity: 0.2;
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+}
+
 .custom-banner {
     /*Change the background image here*/
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/3d/Flag-map_of_the_world_%282017%29.png') !important;
+    background-image: url('../../images/background-index.jpg') !important;
     background-size: cover !important;
 
     /* Original background, for reference

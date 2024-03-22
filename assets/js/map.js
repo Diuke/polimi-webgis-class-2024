@@ -1,36 +1,50 @@
-let osm = new ol.layer.Tile({
+import 'ol/ol.css';
+import 'ol-layerswitcher/dist/ol-layerswitcher.css';
+
+import { Map, View, Overlay } from 'ol';
+import { Tile, Image, Group, Vector } from 'ol/layer';
+import { OSM, ImageWMS, BingMaps, StadiaMaps } from 'ol/source';
+import VectorSource from 'ol/source/Vector';
+import { GeoJSON } from 'ol/format';
+import { fromLonLat } from 'ol/proj';
+import { ScaleLine, FullScreen, OverviewMap, MousePosition } from 'ol/control';
+import LayerSwitcher from 'ol-layerswitcher';
+import { createStringXY } from 'ol/coordinate';
+import { Style, Stroke } from 'ol/style';
+
+let osm = new Tile({
     title: "Open Street Map",
     type: "base",
     visible: true,
-    source: new ol.source.OSM()
+    source: new OSM()
 });
-let colombiaBoundary = new ol.layer.Image({
+let colombiaBoundary = new Image({
     title: "Colombia Boundary",
-    source: new ol.source.ImageWMS({
+    source: new ImageWMS({
         url: 'https://www.gis-geoserver.polimi.it/geoserver/wms',
         params: { 'LAYERS': 'gis:COL_adm0', 'STYLES': 'restricted' }
     })
 });
-var colombiaDepartments = new ol.layer.Image({
+var colombiaDepartments = new Image({
     title: "Colombia Departments",
-    source: new ol.source.ImageWMS({
+    source: new ImageWMS({
         url: 'https://www.gis-geoserver.polimi.it/geoserver/wms',
         params: { 'LAYERS': 'gis:COL_adm1' }
     }),
     opacity: 0.5
 });
 
-var colombiaRoads = new ol.layer.Image({
+var colombiaRoads = new Image({
     title: "Colombia Roads",
-    source: new ol.source.ImageWMS({
+    source: new ImageWMS({
         url: 'https://www.gis-geoserver.polimi.it/geoserver/wms',
         params: { 'LAYERS': 'gis:COL_roads' }
     }),
     visible: false
 });
-var colombiaRivers = new ol.layer.Image({
+var colombiaRivers = new Image({
     title: "Colombia Rivers",
-    source: new ol.source.ImageWMS({
+    source: new ImageWMS({
         url: 'https://www.gis-geoserver.polimi.it/geoserver/wms',
         params: { 'LAYERS': 'gis:COL_rivers' }
     }),
@@ -39,59 +53,59 @@ var colombiaRivers = new ol.layer.Image({
 });
 
 //Create the layer groups and add the layers to them
-let basemapLayers = new ol.layer.Group({
+let basemapLayers = new Group({
     title: "Base Maps",
     layers: [osm]
 });
-let overlayLayers = new ol.layer.Group({
+let overlayLayers = new Group({
     title: "Overlay Layers",
     layers: [colombiaDepartments, colombiaRivers, colombiaRoads]
 })
 
 
-let map = new ol.Map({
+let map = new Map({
     target: document.getElementById('map'),
     layers: [basemapLayers, overlayLayers],
-    view: new ol.View({
-        center: ol.proj.fromLonLat([-74, 4.6]),
+    view: new View({
+        center: fromLonLat([-74, 4.6]),
         zoom: 5
     })
 });
 
 // Add the map controls:
-map.addControl(new ol.control.ScaleLine()); //Controls can be added using the addControl() map function
-map.addControl(new ol.control.FullScreen());
-map.addControl(new ol.control.OverviewMap());
+map.addControl(new ScaleLine()); //Controls can be added using the addControl() map function
+map.addControl(new FullScreen());
+map.addControl(new OverviewMap());
 map.addControl(
-    new ol.control.MousePosition({
-        coordinateFormat: ol.coordinate.createStringXY(4),
+    new MousePosition({
+        coordinateFormat: createStringXY(4),
         projection: 'EPSG:4326',
         className: 'custom-control',
         placeholder: '0.0000, 0.0000'
     })
 );
 
-var layerSwitcher = new ol.control.LayerSwitcher({});
+var layerSwitcher = new LayerSwitcher({});
 map.addControl(layerSwitcher);
 
 
 //OPTIONAL
 //Add the Bing Maps layers
 var BING_MAPS_KEY = "AqbDxABFot3cmpxfshRqLmg8UTuPv_bg69Ej3d5AkGmjaJy_w5eFSSbOzoHeN2_H";
-var bingRoads = new ol.layer.Tile({
+var bingRoads = new Tile({
     title: 'Bing Maps—Roads',
     type: 'base',
     visible: false,
-    source: new ol.source.BingMaps({
+    source: new BingMaps({
         key: BING_MAPS_KEY,
         imagerySet: 'Road'
     })
 });
-var bingAerial = new ol.layer.Tile({
+var bingAerial = new Tile({
     title: 'Bing Maps—Aerial',
     type: 'base',
     visible: false,
-    source: new ol.source.BingMaps({
+    source: new BingMaps({
         key: BING_MAPS_KEY,
         imagerySet: 'Aerial'
     })
@@ -99,32 +113,32 @@ var bingAerial = new ol.layer.Tile({
 basemapLayers.getLayers().extend([bingRoads, bingAerial]);
 
 
-//Add the Stamen base layers
-var stamenWatercolor = new ol.layer.Tile({
-    title: 'Stamen Watercolor',
-    type: 'base',
-    visible: false,
-    source: new ol.source.Stamen({
-        layer: 'watercolor'
-    })
-});
-var stamenToner = new ol.layer.Tile({
-    title: 'Stamen Toner',
-    type: 'base',
-    visible: false,
-    source: new ol.source.Stamen({
-        layer: 'toner'
-    })
-});
-basemapLayers.getLayers().extend([stamenWatercolor, stamenToner]);
+// //Add the Stadia base layers
+// var stamenWatercolor = new Tile({
+//     title: 'Stamen Watercolor',
+//     type: 'base',
+//     visible: false,
+//     source: new StadiaMaps({
+//         layer: 'watercolor'
+//     })
+// });
+// var stamenToner = new Tile({
+//     title: 'Stamen Toner',
+//     type: 'base',
+//     visible: false,
+//     source: new StadiaMaps({
+//         layer: 'toner'
+//     })
+// });
+// basemapLayers.getLayers().extend([stamenWatercolor, stamenToner]);
 
 //Add the WFS layer
-let vectorSource = new ol.source.Vector({});
-const vectorLayer = new ol.layer.Vector({
+let vectorSource = new VectorSource({});
+const vectorLayer = new Vector({
     title: "Colombia water areas",
     source: vectorSource,
-    style: new ol.style.Style({
-        stroke: new ol.style.Stroke({
+    style: new Style({
+        stroke: new Stroke({
             color: 'rgb(255, 0, 0)',
             width: 4
         })
@@ -135,8 +149,9 @@ overlayLayers.getLayers().extend([vectorLayer]);
 
 
 function loadFeatures(response) {
-    vectorSource.addFeatures(new ol.format.GeoJSON().readFeatures(response))
+    vectorSource.addFeatures(new GeoJSON().readFeatures(response))
 }
+
 var base_url = "https://www.gis-geoserver.polimi.it/geoserver/gis/ows?";
 var wfs_url = base_url;
 wfs_url += "service=WFS&"
@@ -145,18 +160,23 @@ wfs_url += "request=GetFeature&"
 wfs_url += "typeName=gis%3ACOL_water_areas&"
 wfs_url += "outputFormat=text%2Fjavascript&"
 wfs_url += "srsname=EPSG:3857&"
-wfs_url += "format_options=callback:loadFeatures"
-$.ajax({ url: wfs_url, dataType: 'jsonp' });
+wfs_url += "format_options=callback:this.loadFeatures"
 
 //Add the code for the Pop-up
 var container = document.getElementById('popup');
 var content = document.getElementById('popup-content');
 var closer = document.getElementById('popup-closer');
 
-var popup = new ol.Overlay({
+var popup = new Overlay({
     element: container
 });
 map.addOverlay(popup);
+
+map.on('loadend', (event) => {
+    console.log("map loaded");
+    // Load the WFS layer
+    $.ajax({ url: wfs_url, dataType: 'jsonp' });
+})
 
 map.on('singleclick', function (event) {
     //This iterates over all the features that are located on the pixel of the click (can be many)
