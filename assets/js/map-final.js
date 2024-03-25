@@ -176,43 +176,46 @@ var popup = new Overlay({
 });
 map.addOverlay(popup);
 
-map.on('singleclick', function (event) {
-    //This iterates over all the features that are located on the pixel of the click (can be many)
-    var feature = map.forEachFeatureAtPixel(event.pixel, function (feature, layer) {
-        return feature;
-    });
+$(document).ready(function () {
+    map.on('singleclick', function (event) {
+        //This iterates over all the features that are located on the pixel of the click (can be many)
+        var feature = map.forEachFeatureAtPixel(event.pixel, function (feature, layer) {
+            return feature;
+        });
 
-    //If there is a feature, open the popup by setting a position to it and put the data from the feature
-    if (feature != null) {
-        var pixel = event.pixel;
-        var coord = map.getCoordinateFromPixel(pixel);
-        popup.setPosition(coord);
-        content.innerHTML =
-            '<h5>Colombia Water Areas</h5><br><b>Name: </b>' +
-            feature.get('NAME') +
-            '</br><b>Description: </b>' +
-            feature.get('HYC_DESCRI');
-    } else {
-        //Only if the colombiaRoads layer is visible, do the GetFeatureInfo request
-        if (colombiaRoads.getVisible()) {
-            var viewResolution = (map.getView().getResolution());
-            var url = colombiaRoads.getSource().getFeatureInfoUrl(event.coordinate, viewResolution, 'EPSG:3857', { 'INFO_FORMAT': 'text/html' });
+        //If there is a feature, open the popup by setting a position to it and put the data from the feature
+        if (feature != null) {
+            var pixel = event.pixel;
+            var coord = map.getCoordinateFromPixel(pixel);
+            popup.setPosition(coord);
+            content.innerHTML =
+                '<h5>Colombia Water Areas</h5><br><b>Name: </b>' +
+                feature.get('NAME') +
+                '</br><b>Description: </b>' +
+                feature.get('HYC_DESCRI');
+        } else {
+            //Only if the colombiaRoads layer is visible, do the GetFeatureInfo request
+            if (colombiaRoads.getVisible()) {
+                var viewResolution = (map.getView().getResolution());
+                var url = colombiaRoads.getSource().getFeatureInfoUrl(event.coordinate, viewResolution, 'EPSG:3857', { 'INFO_FORMAT': 'text/html' });
 
-            if (url) {
-                var pixel = event.pixel;
-                var coord = map.getCoordinateFromPixel(pixel);
-                popup.setPosition(coord);
-                //We do again the AJAX request to get the data from the GetFeatureInfo request
-                $.ajax({ url: url })
-                    .done((data) => {
-                        //Put the data of the GetFeatureInfo response inside the pop-up
-                        //The data that arrives is in HTML
-                        content.innerHTML = data;
-                    });
+                if (url) {
+                    var pixel = event.pixel;
+                    var coord = map.getCoordinateFromPixel(pixel);
+                    popup.setPosition(coord);
+                    //We do again the AJAX request to get the data from the GetFeatureInfo request
+                    $.ajax({ url: url })
+                        .done((data) => {
+                            //Put the data of the GetFeatureInfo response inside the pop-up
+                            //The data that arrives is in HTML
+                            content.innerHTML = data;
+                        });
+                }
             }
         }
-    }
+    });
 });
+
 
 closer.onclick = function () {
     popup.setPosition(undefined);

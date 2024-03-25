@@ -4,12 +4,14 @@
   "description": "",
   "scripts": {
     "start": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "5.3.3",
+    "glob": "^10.3.10",
     "ol": "8.2.0",
     "ol-layerswitcher": "4.1.1"
   },
