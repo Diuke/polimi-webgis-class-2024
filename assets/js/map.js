@@ -14,19 +14,16 @@ import { Style, Stroke } from 'ol/style';
 
 let osm = new Tile({
     title: "Open Street Map",
-    type: "base",
     visible: true,
     source: new OSM()
 });
 let colombiaBoundary = new Image({
-    title: "Colombia Boundary",
     source: new ImageWMS({
         url: 'https://www.gis-geoserver.polimi.it/geoserver/wms',
         params: { 'LAYERS': 'gis:COL_adm0', 'STYLES': 'restricted' }
     })
 });
 var colombiaDepartments = new Image({
-    title: "Colombia Departments",
     source: new ImageWMS({
         url: 'https://www.gis-geoserver.polimi.it/geoserver/wms',
         params: { 'LAYERS': 'gis:COL_adm1' }
@@ -35,7 +32,6 @@ var colombiaDepartments = new Image({
 });
 
 var colombiaRoads = new Image({
-    title: "Colombia Roads",
     source: new ImageWMS({
         url: 'https://www.gis-geoserver.polimi.it/geoserver/wms',
         params: { 'LAYERS': 'gis:COL_roads' }
@@ -43,7 +39,6 @@ var colombiaRoads = new Image({
     visible: false
 });
 var colombiaRivers = new Image({
-    title: "Colombia Rivers",
     source: new ImageWMS({
         url: 'https://www.gis-geoserver.polimi.it/geoserver/wms',
         params: { 'LAYERS': 'gis:COL_rivers' }
@@ -62,7 +57,7 @@ let overlayLayers = new Group({
     layers: [colombiaDepartments, colombiaRivers, colombiaRoads]
 })
 
-
+// Map Initialization
 let map = new Map({
     target: document.getElementById('map'),
     layers: [basemapLayers, overlayLayers],
@@ -73,161 +68,24 @@ let map = new Map({
 });
 
 // Add the map controls:
-map.addControl(new ScaleLine()); //Controls can be added using the addControl() map function
-map.addControl(new FullScreen());
-map.addControl(new OverviewMap());
-map.addControl(
-    new MousePosition({
-        coordinateFormat: createStringXY(4),
-        projection: 'EPSG:4326',
-        className: 'custom-control',
-        placeholder: '0.0000, 0.0000'
-    })
-);
-
-var layerSwitcher = new LayerSwitcher({});
-map.addControl(layerSwitcher);
 
 
 //OPTIONAL
 //Add the Bing Maps layers
-var BING_MAPS_KEY = "AqbDxABFot3cmpxfshRqLmg8UTuPv_bg69Ej3d5AkGmjaJy_w5eFSSbOzoHeN2_H";
-var bingRoads = new Tile({
-    title: 'Bing Maps—Roads',
-    type: 'base',
-    visible: false,
-    source: new BingMaps({
-        key: BING_MAPS_KEY,
-        imagerySet: 'Road'
-    })
-});
-var bingAerial = new Tile({
-    title: 'Bing Maps—Aerial',
-    type: 'base',
-    visible: false,
-    source: new BingMaps({
-        key: BING_MAPS_KEY,
-        imagerySet: 'Aerial'
-    })
-});
-basemapLayers.getLayers().extend([bingRoads, bingAerial]);
+var BING_MAPS_KEY = "YOUR_KEY";
 
+//Add the Stadia Maps layers
+var STADIA_MAPS_KEY = "YOUR_KEY";
 
-// //Add the Stadia base layers
-// var stamenWatercolor = new Tile({
-//     title: 'Stamen Watercolor',
-//     type: 'base',
-//     visible: false,
-//     source: new StadiaMaps({
-//         layer: 'watercolor'
-//     })
-// });
-// var stamenToner = new Tile({
-//     title: 'Stamen Toner',
-//     type: 'base',
-//     visible: false,
-//     source: new StadiaMaps({
-//         layer: 'toner'
-//     })
-// });
-// basemapLayers.getLayers().extend([stamenWatercolor, stamenToner]);
 
 //Add the WFS layer
-let vectorSource = new VectorSource({});
-const vectorLayer = new Vector({
-    title: "Colombia water areas",
-    source: vectorSource,
-    style: new Style({
-        stroke: new Stroke({
-            color: 'rgb(255, 0, 0)',
-            width: 4
-        })
-    }),
-    zIndex: 10
-});
-overlayLayers.getLayers().extend([vectorLayer]);
 
-
-function loadFeatures(response) {
-    vectorSource.addFeatures(new GeoJSON().readFeatures(response))
-}
-
-var base_url = "https://www.gis-geoserver.polimi.it/geoserver/gis/ows?";
-var wfs_url = base_url;
-wfs_url += "service=WFS&"
-wfs_url += "version=2.0.0&"
-wfs_url += "request=GetFeature&"
-wfs_url += "typeName=gis%3ACOL_water_areas&"
-wfs_url += "outputFormat=text%2Fjavascript&"
-wfs_url += "srsname=EPSG:3857&"
-wfs_url += "format_options=callback:this.loadFeatures"
 
 //Add the code for the Pop-up
-var container = document.getElementById('popup');
-var content = document.getElementById('popup-content');
-var closer = document.getElementById('popup-closer');
-
-var popup = new Overlay({
-    element: container
-});
-map.addOverlay(popup);
-
-map.on('loadend', (event) => {
-    console.log("map loaded");
-    // Load the WFS layer
-    $.ajax({ url: wfs_url, dataType: 'jsonp' });
-})
-
-map.on('singleclick', function (event) {
-    //This iterates over all the features that are located on the pixel of the click (can be many)
-    var feature = map.forEachFeatureAtPixel(event.pixel, function (feature, layer) {
-        return feature;
-    });
-
-    //If there is a feature, open the popup by setting a position to it and put the data from the feature
-    if (feature != null) {
-        var pixel = event.pixel;
-        var coord = map.getCoordinateFromPixel(pixel);
-        popup.setPosition(coord);
-        content.innerHTML =
-            '<h5>Colombia Water Areas</h5><br><b>Name: </b>' +
-            feature.get('NAME') +
-            '</br><b>Description: </b>' +
-            feature.get('HYC_DESCRI');
-    } else {
-        //Only if the colombiaRoads layer is visible, do the GetFeatureInfo request
-        if (colombiaRoads.getVisible()) {
-            var viewResolution = (map.getView().getResolution());
-            var url = colombiaRoads.getSource().getFeatureInfoUrl(event.coordinate, viewResolution, 'EPSG:3857', { 'INFO_FORMAT': 'text/html' });
-            console.log(url);
-
-            if (url) {
-                var pixel = event.pixel;
-                var coord = map.getCoordinateFromPixel(pixel);
-                popup.setPosition(coord);
-                //We do again the AJAX request to get the data from the GetFeatureInfo request
-                $.ajax({ url: url })
-                    .done((data) => {
-                        console.log(data);
-                        //Put the data of the GetFeatureInfo response inside the pop-up
-                        //The data that arrives is in HTML
-                        content.innerHTML = data;
-                    });
-            }
-        }
-    }
-});
-
-closer.onclick = function () {
-    popup.setPosition(undefined);
-    closer.blur();
-    return false;
-};
 
 
-// Adding map event for pointermove
-map.on('pointermove', function (event) {
-    var pixel = map.getEventPixel(event.originalEvent);
-    var hit = map.hasFeatureAtPixel(pixel);
-    map.getTarget().style.cursor = hit ? 'pointer' : '';
-});
+//Add a map singleclick event
+
+
+
+//Adding map event for pointermove
