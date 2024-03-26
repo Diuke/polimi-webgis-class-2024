@@ -14,11 +14,10 @@
     <!-- Layer Switcher CSS -->
     <!-- <link rel="stylesheet" href="https://rawgit.com/walkermatt/ol-layerswitcher/master/src/ol-layerswitcher.css"> -->
 
-    <link rel="stylesheet" href="../assets/css/custom-styles.css">
+    <!-- Static files are imported from public folder -->
+    <link rel="stylesheet" href="/css/custom-styles.css">
 
-    <!--Scripts-->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
+    <!-- Modules are imported normally -->
     <script type="module" src="../assets/js/map.js"></script>
 </head>
 
@@ -31,11 +30,14 @@
 
         <!--The structure for the popup-->
         <div id="popup" class="ol-popup">
-            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+            <a href="#" id="popup-closer" class="ol-popup-closer">&times;</a>
             <div id="popup-content">
             </div>
         </div>
     </div>
+
+    <!--Scripts-->
+    <script src="/js/jquery.min.js"></script>
 
 </body>
 

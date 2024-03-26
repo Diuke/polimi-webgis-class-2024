@@ -14,15 +14,14 @@
     <!-- Layer Switcher CSS -->
     <!-- <link rel="stylesheet" href="https://rawgit.com/walkermatt/ol-layerswitcher/master/src/ol-layerswitcher.css"> -->
 
-    
+    <!-- Static files are imported from public folder -->
+    <link rel="stylesheet" href="/polimi-webgis-class-2024/css/custom-styles.css">
 
-    <!--Scripts-->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
+    <!-- Modules are imported normally -->
     
-  <script type="module" crossorigin src="/polimi-webgis-class-2024/assets/webgis.b4e87ef8.js"></script>
+  <script type="module" crossorigin src="/polimi-webgis-class-2024/assets/webgis.a6dc93c2.js"></script>
   <link rel="stylesheet" href="/polimi-webgis-class-2024/assets/webgis.f3c649f1.css">
-  <link rel="stylesheet" href="/polimi-webgis-class-2024/assets/custom-styles.a439721c.css">
+  <link rel="stylesheet" href="/polimi-webgis-class-2024/assets/bootstrap.b39a95a2.css">
 </head>
 
 <body>
@@ -34,11 +33,14 @@
 
         <!--The structure for the popup-->
         <div id="popup" class="ol-popup">
-            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+            <a href="#" id="popup-closer" class="ol-popup-closer">&times;</a>
             <div id="popup-content">
             </div>
         </div>
     </div>
+
+    <!--Scripts-->
+    <script src="/polimi-webgis-class-2024/js/jquery.min.js"></script>
 
 </body>
 
