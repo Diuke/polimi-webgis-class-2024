@@ -35,7 +35,7 @@ console.log(inputs);
 
 export default {
     // config options
-    base: './',
+    base: '/polimi-webgis-class-2024/',
     build: {
         outDir: 'docs',
         emptyOutDir: true,
