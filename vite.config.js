@@ -11,7 +11,7 @@ export default {
     // According to https://vitejs.dev/guide/static-deploy.html 
     base: '/polimi-webgis-class-2024/', 
 
-    publicDir: "assets",
+    publicDir: "public",
 
     // Options for the build command
     build: {
