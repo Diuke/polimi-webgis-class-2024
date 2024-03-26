@@ -1,13 +1,12 @@
 import 'ol/ol.css';
 import 'ol-layerswitcher/dist/ol-layerswitcher.css';
-
 import { Map, View, Overlay } from 'ol';
 import { Tile, Image, Group, Vector } from 'ol/layer';
 import { OSM, ImageWMS, BingMaps, StadiaMaps } from 'ol/source';
 import VectorSource from 'ol/source/Vector';
 import { GeoJSON } from 'ol/format';
 import { fromLonLat } from 'ol/proj';
-import { ScaleLine, FullScreen, OverviewMap, MousePosition } from 'ol/control';
+import { ScaleLine, FullScreen, MousePosition } from 'ol/control';
 import LayerSwitcher from 'ol-layerswitcher';
 import { createStringXY } from 'ol/coordinate';
 import { Style, Stroke } from 'ol/style';

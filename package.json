@@ -1,17 +1,17 @@
 {
   "name": "gis-webmap",
   "version": "1.0.0",
-  "description": "",
+  "description": "Project for the Web Development part of the GIS lessons 2023 - 2024.",
   "scripts": {
-    "start": "vite",
+    "start": "vite --base=./",
     "build": "vite build",
     "preview": "vite preview"
   },
   "author": "",
-  "license": "ISC",
+  "license": "CC0-1.0",
   "dependencies": {
     "bootstrap": "5.3.3",
-    "glob": "^10.3.10",
+    "glob": "10.3.10",
     "ol": "8.2.0",
     "ol-layerswitcher": "4.1.1"
   },

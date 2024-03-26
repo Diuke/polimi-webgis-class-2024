@@ -161,6 +161,8 @@ wfs_url += "outputFormat=text%2Fjavascript&"
 wfs_url += "srsname=EPSG:3857&"
 wfs_url += "format_options=callback:loadFeatures"
 
+// This will request the WFS layer once the map is rendered.
+// Uses the map event 'postrender': https://openlayers.org/en/v8.2.0/apidoc/module-ol_MapEvent-MapEvent.html#event:postrender
 map.once('postrender', (event) => {
     // Load the WFS layer
     $.ajax({ url: wfs_url, dataType: 'jsonp' });
@@ -176,6 +178,7 @@ var popup = new Overlay({
 });
 map.addOverlay(popup);
 
+// This ensures that JQuery ($) is already available in the page.
 $(document).ready(function () {
     map.on('singleclick', function (event) {
         //This iterates over all the features that are located on the pixel of the click (can be many)
@@ -217,6 +220,7 @@ $(document).ready(function () {
 });
 
 
+// The click event handler for closing the popup.
 closer.onclick = function () {
     popup.setPosition(undefined);
     closer.blur();
