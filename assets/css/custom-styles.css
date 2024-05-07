@@ -93,3 +93,11 @@
 }
 
 /*Add your new styles after this line*/
+.custom-control {
+    bottom: 30px;
+    position: absolute;
+    right: 15px;
+    background: white;
+    border: 2px solid  green;
+    padding: 10px;
+}
