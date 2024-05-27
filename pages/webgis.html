@@ -8,17 +8,14 @@
     <meta charset="utf-8">
 
     <!--StyleSheets-->
-    <!-- <link rel="stylesheet" href="../assets/libraries/ol-v6.14.1-dist/ol.css"> -->
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/libraries/ol-8.2.0/ol.css">
+    <link rel="stylesheet" href="../assets/libraries/bootstrap-5.0.2-dist/css/bootstrap.css">
 
     <!-- Layer Switcher CSS -->
-    <!-- <link rel="stylesheet" href="https://rawgit.com/walkermatt/ol-layerswitcher/master/src/ol-layerswitcher.css"> -->
+    <link rel="stylesheet" href="https://rawgit.com/walkermatt/ol-layerswitcher/master/src/ol-layerswitcher.css">
 
-    <!-- Static files are imported from public folder -->
+    <!-- Static files are imported from assets -->
     <link rel="stylesheet" href="../assets/css/custom-styles.css">
-
-    <!-- Modules are imported normally -->
-    <script type="module" src="../assets/js/map.js"></script>
 </head>
 
 <body>
@@ -37,7 +34,16 @@
     </div>
 
     <!--Scripts-->
-    <script src="/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/libraries/ol-8.2.0/dist/ol.js"></script>
+
+    <!-- Layer Switcher JS -->
+    <script src="http://rawgit.com/walkermatt/ol-layerswitcher/master/dist/ol-layerswitcher.js"></script>
+
+    <!-- import map.js -->
+    <script src="../assets/js/map.js"></script>
+
+
 
 </body>
 
