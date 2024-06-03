@@ -94,7 +94,7 @@ map.addControl(layerSwitcher);
 
 //OPTIONAL
 //Add the Bing Maps layers
-var BING_MAPS_KEY = "AqbDxABFot3cmpxfshRqLmg8UTuPv_bg69Ej3d5AkGmjaJy_w5eFSSbOzoHeN2_H";
+var BING_MAPS_KEY = "NOT_AVAILABLE";
 var bingRoads = new Tile({
     title: 'Bing Maps—Roads',
     type: 'base',
