@@ -20,6 +20,7 @@ let osm = new Tile({
 });
 let colombiaBoundary = new Image({
     title: "Colombia Administrative level 0",
+    visible: true,
     source: new ImageWMS({
         url: 'https://www.gis-geoserver.polimi.it/geoserver/wms',
         params: { 'LAYERS': 'gis:COL_adm0', 'STYLES': 'restricted' }
@@ -27,6 +28,7 @@ let colombiaBoundary = new Image({
 });
 var colombiaDepartments = new Image({
     title: "Colombia Administrative level 1",
+    visible: true,
     source: new ImageWMS({
         url: 'https://www.gis-geoserver.polimi.it/geoserver/wms',
         params: { 'LAYERS': 'gis:COL_adm1' }
@@ -36,14 +38,15 @@ var colombiaDepartments = new Image({
 
 var colombiaRoads = new Image({
     title: "Colombia Roads",
+    visible: false,
     source: new ImageWMS({
         url: 'https://www.gis-geoserver.polimi.it/geoserver/wms',
         params: { 'LAYERS': 'gis:COL_roads' }
     }),
-    visible: false
 });
 var colombiaRivers = new Image({
     title: "Colombia Rivers",
+    visible: true,
     source: new ImageWMS({
         url: 'https://www.gis-geoserver.polimi.it/geoserver/wms',
         params: { 'LAYERS': 'gis:COL_rivers' }
@@ -141,7 +144,7 @@ let wfsSource = new VectorSource()
 let wfsLayer = new Vector({
     title: "Colombia water areas",
     source: wfsSource,
-
+    visible: true,
     style: new Style({
         stroke: new Stroke({
             color: 'rgb(255, 102, 102)',
